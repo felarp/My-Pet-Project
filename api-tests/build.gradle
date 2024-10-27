@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
+    implementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    implementation 'org.hamcrest:hamcrest:2.2'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    implementation 'io.qameta.allure:allure-rest-assured:2.29.0'
+}
+
+test {
+    useJUnitPlatform()
+}
