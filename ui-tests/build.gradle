@@ -1,19 +1,37 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.12.0'
 }
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
+ext {
+    allureSelenideVersion = "2.12.0"
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'com.codeborne:selenide:6.4.0'
-
+    implementation 'com.codeborne:selenide:7.5.1'
+    implementation "io.qameta.allure:allure-selenide:${allureSelenideVersion}"
+    testImplementation "io.qameta.allure:allure-junit5:${allureSelenideVersion}"
+    testImplementation 'org.assertj:assertj-core:3.26.3'
 }
 
 test {
     useJUnitPlatform()
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+tasks.withType(Test) {
+    useJUnitPlatform()
+    systemProperty 'allure.results.directory', 'build/allure-results'
+}
+allure {
+    version = '2.12.0'
+    autoconfigure = true
+    aspectjweaver = true
 }

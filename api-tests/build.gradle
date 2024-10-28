@@ -16,6 +16,10 @@ dependencies {
     implementation 'org.hamcrest:hamcrest:2.2'
     implementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
     implementation 'io.qameta.allure:allure-rest-assured:2.29.0'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    testCompileOnly 'org.projectlombok:lombok:1.18.34'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 }
 
 test {

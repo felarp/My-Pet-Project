@@ -1,11 +1,11 @@
 plugins {
     id 'java'
-    id 'io.qameta.allure' version '2.11.2'
+//    id 'io.qameta.allure' version '2.29.0'
 }
 
 ext {
     junitJupiterVersion = '5.11.3'
-    allureJunitVersion = '2.29.0'
+    allureJunitVersion = '2.21.0'
     restAssuredVersion = '5.5.0'
 }
 
@@ -16,7 +16,7 @@ subprojects {
         testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
         implementation "io.rest-assured:rest-assured:${restAssuredVersion}"
-        testImplementation "io.qameta.allure:allure-junit5:${allureJunitVersion}"
+        implementation "io.qameta.allure:allure-junit5:${allureJunitVersion}"
         implementation 'org.aeonbits.owner:owner-java8:1.0.12'
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.0'
         runtimeOnly 'org.aspectj:aspectjweaver:1.9.22.1'
@@ -43,17 +43,21 @@ tasks.register('runUiTest', Test) {
     useJUnitPlatform()
     include('**/*UiTest.*')
 }
-
-test {
-    useJUnitPlatform()
-    finalizedBy 'allureReport'
-    systemProperty 'allure.results.directory', file("build/allure-results")
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
 
-allure {
-    version = '2.11.2'
-    aspectjweaver = true
-}
+
+//test {
+//    useJUnitPlatform()
+//    finalizedBy 'allureReport'
+//    systemProperty 'allure.results.directory', file("build/allure-results")
+//}
+//
+//allure {
+//    version = '2.11.2'
+//    aspectjweaver = true
+//}
 
 
 //tasks.register('allureServe', Exec) {

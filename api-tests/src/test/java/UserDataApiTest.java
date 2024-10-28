@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
     public void testUnregisteredRegisteredUser() {
         User unregistereduser = new User("unregistered", "user");
         Response response = apiProvider.post(Urls.LOGIN,unregistereduser);
-        new HttpAssertions(response, Token.class)
+        new HttpAssertions(response, Message.class)
                 .statusCode(401)
                 .assertionsJsonPathValueNotEmpty("access_token");
     }
