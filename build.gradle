@@ -1,7 +1,12 @@
 plugins {
     id 'java'
-//    id 'io.qameta.allure' version '2.29.0'
+    id 'io.qameta.allure' version '2.12.0'
 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 
 ext {
     junitJupiterVersion = '5.11.3'
@@ -11,6 +16,7 @@ ext {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'io.qameta.allure'
 
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
@@ -23,46 +29,40 @@ subprojects {
         compileOnly 'org.projectlombok:lombok:1.18.34'
         testImplementation 'org.assertj:assertj-core:3.26.3'
         testImplementation 'org.hamcrest:hamcrest:2.2'
-        implementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+        implementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+
     }
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+    group = 'org.example'
+    version = '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+    repositories {
+        mavenCentral()
+    }
 
-tasks.register('runApiTest', Test) {
-    useJUnitPlatform()
-    include('**/*ApiTest.*')
-}
+    tasks.register('runApiTest', Test) {
+        group = 'verification'
+        useJUnitPlatform()
+        include('**/*ApiTest.*')
+    }
 
-tasks.register('runUiTest', Test) {
-    useJUnitPlatform()
-    include('**/*UiTest.*')
-}
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
+    tasks.register('runUiTest', Test) {
+        group = 'verification'
+        useJUnitPlatform()
+        include('**/*UiTest.*')
+    }
 
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
 
-//test {
-//    useJUnitPlatform()
-//    finalizedBy 'allureReport'
-//    systemProperty 'allure.results.directory', file("build/allure-results")
-//}
-//
-//allure {
-//    version = '2.11.2'
-//    aspectjweaver = true
-//}
+    test {
+        useJUnitPlatform()
+        finalizedBy 'allureReport'
+        systemProperty 'allure.results.directory', file("build/allure-results")
+    }
 
-
-//tasks.register('allureServe', Exec) {
-//    commandLine "allure", "serve", "build/allure-results"
-
-
-
-
+    allure {
+        version = '2.12.0'
+    }

@@ -25,12 +25,13 @@ public class HttpAssertions {
         this.obj = response.as(cl);
     }
 
-    public HttpAssertions( Response response,   Class<? extends ResponseType> cl, boolean isArray) {
+    public HttpAssertions( Response response, Class<? extends ResponseType> cl, boolean isArray) {
        this.validatableResponse = response.then();
         this.response = response;
         this.obj = null;
-        if(isArray) this.list = response.jsonPath().getList(".", cl);
-        else {
+        if(isArray) {
+            this.list = response.jsonPath().getList(".", cl);
+        }else {
             this.list = null;
         }
     }
